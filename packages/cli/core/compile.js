@@ -28,6 +28,13 @@ const initParser = require('./init/parser');
 const initPlugin = require('./init/plugin');
 
 class Compile extends Hook {
+
+/**
+ * 初始化参数：
+ * version 版本号（package.json）
+ * options 配置项（wepy.config和shell命令行）
+ * 
+ */
   constructor(opt) {
     super();
     let self = this;
