@@ -28,6 +28,13 @@ const DEFAULT_OPTIONS = {
 
 const DEFAULT_CONFIG = path.resolve('wepy.config.js');
 
+/**
+ * @description: 设置对象里面的值，这里建议可以用es6优化
+ * @param {*} obj 
+ * @param {*} key 支持'a.b.c'的形式，表示寻找{a:{b:{c: val}}}的c
+ * @param {*} val 更新的val
+ * @return {*} obj
+ */
 function setValue(obj, key, val) {
   let arr = key.split('.');
   let left = obj;
@@ -44,6 +51,12 @@ function setValue(obj, key, val) {
   return obj;
 }
 
+/**
+ * @description: 获取对象里面的值
+ * @param {*} obj
+ * @param {*} key
+ * @return {*}
+ */
 function getValue(obj, key) {
   let arr = key.split('.');
   let left = obj;
@@ -61,6 +74,12 @@ function getValue(obj, key) {
   return rst;
 }
 
+/**
+ * @description: 类型判断
+ * @param {*} t
+ * @param {*} val
+ * @return {*}
+ */
 function check(t, val) {
   if (Array.isArray(t)) {
     return t.some(type => check(type, val));
@@ -83,6 +102,17 @@ function check(t, val) {
   }
 }
 
+/**
+ * @description: 解析配置，根据默认配置解析，返回对象 ：
+ * 1. 如果相关配置没有设，且默认配置有，且不是命令行配置，则添加默认配置到返回对象
+ * 2. 如果配置有设，根据默认配置做类型校验
+ *  1. 不符合，报错
+ *  2. 符合，加入返回对象
+ * @param {*} opt
+ * @param {*} baseOpt
+ * @param {*} fromCommandLine
+ * @return {*} ret 
+ */
 function parse(opt = {}, baseOpt = DEFAULT_OPTIONS, fromCommandLine) {
   let ret = {};
 
